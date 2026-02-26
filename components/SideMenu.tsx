@@ -1,23 +1,59 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import {
+  Home,
+  User,
+  BookOpen,
+  Layers,
+  Briefcase,
+  Code2,
+  MessageSquare,
+} from "lucide-react";
+
+const menus = [
+  { href: "/", icon: Home },
+  { href: "/about", icon: User },
+  { href: "/eduexp", icon: BookOpen },
+  { href: "/spec", icon: Layers },
+  { href: "/projects", icon: Briefcase },
+  { href: "/skills", icon: Code2 },
+  { href: "/contactme", icon: MessageSquare },
+];
 
 export default function SideMenu() {
-  return (
-    <div style={{
-      width: "200px",
-      padding: "20px",
-      backgroundColor: "#f4f4f4",
-      height: "100vh"
-    }}>
-      <h2>Menu</h2>
+  const pathname = usePathname();
 
-      <ul style={{ listStyle: "none", padding: 0 }}>
-        <li><Link href="/">Home</Link></li>
-        <li><Link href="/aboutme">About Me</Link></li>
-        <li><Link href="/eduexp">Education</Link></li>
-        <li><Link href="/projects">Projects</Link></li>
-        <li><Link href="/skills">Skills</Link></li>
-        <li><Link href="/contactme">Contact</Link></li>
-      </ul>
+  return (
+    <div className="flex justify-center">
+      {/* CONTAINER */}
+      <div className="
+flex flex-col items-center justify-center
+gap-8
+w-[60px] h-[499px]
+rounded-full
+bg-[#1d1c1d]
+border border-[#757575]
+">
+        {menus.map((menu, index) => {
+          const Icon = menu.icon;
+          const active = pathname === menu.href;
+
+          return (
+            <Link key={index} href={menu.href}>
+              <Icon
+                size={35}
+                className={`transition-all ${
+                  active
+                    ? "text-orange-500"
+                    : "text-gray-400 hover:text-orange-500"
+                }`}
+              />
+            </Link>
+          );
+        })}
+      </div>
     </div>
   );
 }
